@@ -81,8 +81,10 @@ describe("Users Router", () => {
             expect(res.status).toBe(204);
         });
 
-        it("cleans the users table", async () => {
-            await db("users").truncate();
-        })
+        
     });   
+
+    it("cleans the users table", async () => {
+        await db("users").truncate();
+    });
 });
