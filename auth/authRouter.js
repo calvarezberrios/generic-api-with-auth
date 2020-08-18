@@ -7,7 +7,7 @@ const Users = require("../users/users-model.js");
 const validate = require("../api/validate.js");
 
 
-router.post("/register", validate.user, (req, res, next) => {
+router.post("/register", validate.register, (req, res, next) => {
     const user = req.body;
 
     const hash = bcrypt.hashSync(user.password, 10);
@@ -22,19 +22,12 @@ router.post("/register", validate.user, (req, res, next) => {
 
 });
 
-router.post("/login", (req, res, next) => {
-    const {username, password} = req.body;
+router.post("/login", validate.login, (req, res, next) => {
+    const user = req.user;
 
-    Users.findBy({ username })
-        .then(user => {
-            if(user && bcrypt.compareSync(password, user.password)) {
-                const token = generateToken(user);
-                res.status(200).json({ user_id: user.id, username: user.username, token });
-            } else {
-                next({ code: 404, message: "Username and/or Password incorrect"})
-            }
-        })
-        .catch(err => next({ code: 500, message: "Error retrieving user data", err }));
+    const token = generateToken(user);
+    res.status(200).json({ user_id: user.id, username: user.username, token });
+
 });
 
 function generateToken(user) {

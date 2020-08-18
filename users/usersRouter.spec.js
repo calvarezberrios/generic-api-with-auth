@@ -12,6 +12,10 @@ const testUser = {
 let token = null;
 
 describe("Users Router", () => {
+    it("cleans the users table", async () => {
+        await db("users").truncate();
+    });
+    
     it("creates test user", async () => {
         const res = await request(server).post("/api/auth/register")
                             .send(testUser);

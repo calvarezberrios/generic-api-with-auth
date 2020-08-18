@@ -11,6 +11,10 @@ const testUser = {
 };
 
 describe("Auth Router", () => {
+    it("cleans the users table", async () => {
+        await db("users").truncate();
+    });
+    
     describe("POST /api/auth/register", () => {
         let res = {};
         beforeAll(async () => {
