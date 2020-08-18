@@ -22,7 +22,7 @@ describe("Users Router", () => {
         token = res.body.token;
     });
 
-    describe("GET /api/users", () => {
+    /* describe("GET /api/users", () => {
         let res = {};
         beforeAll(async () => {
             res = (await request(server).get("/api/users").auth(token, {type: "bearer"}));
@@ -36,7 +36,7 @@ describe("Users Router", () => {
             expect(res.body).toBeInstanceOf(Array);
         });
 
-    });
+    }); */
 
     describe("GET /api/users/:id", () => {
         let res = {};

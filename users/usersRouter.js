@@ -19,7 +19,7 @@ router.get("/:id", (req, res, next) => {
 // Validate user before put and delete, only allow logged on user to edit or delete
 // Can only edit or delete their own data/account
 
-/* router.put("/:id", (req, res, next) => {
+router.put("/:id", validate.loggedon, (req, res, next) => {
     const { id } = req.params;
     const changes = req.body;
     changes.id = id;
@@ -31,12 +31,12 @@ router.get("/:id", (req, res, next) => {
         .catch(err => next({ code: 500, message: "Error updating user data", err }));
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", validate.loggedon, (req, res, next) => {
     const { id } = req.params;
 
     Users.remove(id)
         .then(() => res.status(204).end())
         .catch(err => next({ code: 500, message: "Error removing user data", err }));
-}); */
+});
 
 module.exports = router;

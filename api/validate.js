@@ -43,4 +43,12 @@ module.exports = {
                 .catch(err => next({ code: 500, message: "Error retrieving user data", err }));
         }
     },
+    loggedon: (req, res, next) => {
+        const { id } = req.params;
+        if(req.jwt.subject === parseInt(id)) {
+            next();
+        } else {
+            next({ code: 403, message: "You can only edit/delete your own account" });
+        }
+    }
 }
