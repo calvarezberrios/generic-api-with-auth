@@ -2,21 +2,26 @@ const request = require("supertest");
 const server = require("../api/server.js");
 const db = require("../data/dbConfig.js");
 
+const testUser = {
+    fname: "Test",
+    lname: "Tester",
+    email: "tester@testing.com",
+    username: "tester",
+    password: "1234"
+}
+let token = null;
+
 describe("Users Router", () => {
     it("creates test user", async () => {
         const res = await request(server).post("/api/auth/register")
-                            .send({
-                                    fname: "Test",
-                                    lname: "Tester",
-                                    username: "tester",
-                                    password: "1234"
-                            });
+                            .send(testUser);
+        token = res.body.token;
     });
 
     describe("GET /api/users", () => {
         let res = {};
         beforeAll(async () => {
-            res = await request(server).get("/api/users");
+            res = (await request(server).get("/api/users").auth(token, {type: "bearer"}));
         });
 
         test("should get status 200 OK", () => {
@@ -32,7 +37,7 @@ describe("Users Router", () => {
     describe("GET /api/users/:id", () => {
         let res = {};
         beforeAll(async () => {
-            res = await request(server).get("/api/users/1");
+            res = (await request(server).get("/api/users/1").auth(token, {type: "bearer"}));
         });
 
         test("should return status 200 OK", () => {
@@ -48,15 +53,13 @@ describe("Users Router", () => {
     describe("PUT /api/users/:id", () => {
         let res = {};
         const changes = {
+            ...testUser,
             id: 1,
-            fname: "Test",
-            lname: "Tester",
-            username: "tester",
-            password: "1234"
+            username: "updatedTester"
         }
         beforeAll(async () => {
-            res = await request(server).put("/api/users/1")
-                            .send(changes);
+            res = (await request(server).put("/api/users/1").send(changes).auth(token, {type: "bearer"}));
+                            ;
         });
 
         test("should return status 200 OK", () => {
@@ -71,15 +74,15 @@ describe("Users Router", () => {
     describe("DELETE /api/users/:id", () => {
         let res = {};
         beforeAll(async () => {
-            res = (await request(server).delete("/api/users/1"));
+            res = (await request(server).delete("/api/users/1").auth(token, {type: "bearer"}));
         });
 
         test("should return status 204 No Content", () => {
             expect(res.status).toBe(204);
         });
-    });
 
-    it("cleans the users table", async () => {
-        await db("users").truncate();
-    })
+        it("cleans the users table", async () => {
+            await db("users").truncate();
+        })
+    });   
 });

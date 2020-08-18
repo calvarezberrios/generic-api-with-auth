@@ -5,6 +5,7 @@ const db = require("../data/dbConfig.js");
 const testUser = {
     fname: "Test",
     lname: "Tester",
+    email: "tester@testing.com",
     username: "tester",
     password: "1234"
 };
@@ -21,8 +22,8 @@ describe("Auth Router", () => {
             expect(res.status).toBe(201);
         });
 
-        test("should return created user object", () => {
-            expect(res.body).toEqual({...testUser, id: 1});
+        test("should return object a token property", () => {
+            expect(res.body).toHaveProperty("token");
         });
     });
 
@@ -40,9 +41,13 @@ describe("Auth Router", () => {
         test("should return an object with a token property", () => {
             expect(res.body).toHaveProperty("token");
         });
+
+        
     });
-    
+
     it("cleans out the users table", async () => {
         await db("users").truncate();
     });
+    
+    
 });
