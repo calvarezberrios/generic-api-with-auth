@@ -33,7 +33,7 @@ in a two week period where the team collaborates to get all essential items conn
 # API Endpoints
 Deployed to Heroku: [Backend Api]()
 
-All endpoints receive and return JSON
+Most endpoints receive and return JSON
 <br><br>
 
 ### Authentication
