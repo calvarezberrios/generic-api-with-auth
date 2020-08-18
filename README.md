@@ -141,6 +141,7 @@ ___
 **Returns**
 ```json
 {
+    "id": 1,
     "fname": "Test",
     "lname": "Tester",
     "email": "tester@testing.com",
