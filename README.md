@@ -1,17 +1,27 @@
-# <Project Name> Build Week Project
+# BackEnd Build Week API Starter
 
 **This api is made to work with the project named above built by a team consisting of UI/UX Web, React FrontEnd, and Backend developers**
 
 <br >
 
+## Introduction
+<br>
+
 This api will provide the resources necessary on the React App to log in, out, and display data for users to use. The complete project is built
 in a two week period where the team collaborates to get all essential items connected to each other to make one app for the user.
 
-<br>
+**Make sure to add a .env file with at least the following:**
+```
+    PORT=5000
+    NODE_ENV=development
+    DATABASE_URL=postgres://postgres:<postgres_password>@localhost:5432/<database_name_in_postgres>
 
-## Introduction
+    JWT_SECRET=your secret here... you can convert it to any type of hash online if you like
+```
 
-<Introduction for the app goes here...>
+Convert Secret or anything to hash -> [Click Here!](https://www.md5hashgenerator.com/)
+- This will convert the secret to an MD5 Hash string
+- You can use any hash generator online, just Google **Hash Generator**
 
 <br><br>
 
